@@ -1,0 +1,6 @@
+undefined
+ undefined 
+ 💡 Fix it:
+📂 Create a folder named txt
+📄 Inside it, create a file named input.txt
+✍️ Add some sample text like: Hello from Node.js!
