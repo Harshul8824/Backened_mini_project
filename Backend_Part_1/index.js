@@ -228,3 +228,17 @@ server.listen(8000,'127.0.0.1',()=>{  //'127.0.0.1' -> this is optional
 
 
 //class 19 -> setting up prettier code formatter in vs code
+
+
+// section 2 -> 
+
+// | Feature                 | Static Website                                     | Dynamic Website                                       |
+// |-------------------------|----------------------------------------------------|--------------------------------------------------------|
+// | Definition              | Displays fixed content; same for all users.        | Displays dynamic content that can change per user.     |
+// | Content Source          | Content is hardcoded in HTML, CSS, JS files.       | Content is fetched from a database or API.             |
+// | Technologies Used       | HTML, CSS, JavaScript (client-side only).          | Server-side languages like PHP, Python, Node.js, etc., with databases like MySQL, MongoDB. |
+// | Content Update          | Requires manual update of HTML files.              | Can be updated via CMS (e.g., WordPress) or admin panel. |
+// | Speed                   | Faster to load (no server processing needed).      | Slower than static (requires server processing).        |
+// | Hosting Cost            | Usually cheaper (simple file hosting).             | More expensive (requires server and database).          |
+// | Examples                | Personal portfolios, landing pages, simple blogs.  | E-commerce sites, social media platforms, news portals. |
+// | User Interaction        | Limited; forms and user-specific content are rare. | High interactivity, user logins, shopping carts, etc.   |
