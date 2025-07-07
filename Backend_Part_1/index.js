@@ -138,7 +138,7 @@ const server = http.createServer((req,res)=>{
       if(pathname === '/' || pathname === '/overview'){
         res.writeHead(200, {'content-type' : 'text/html'});
 
-        const cardsHtml = dataObj.map(el => replaceTemplate(tempCard, el)).join('');  //join(' ') is use to convert in string
+        const cardsHtml = dataObj.map(el => replaceTemplate(tempCard, el)).join('');  //join(' ') is use to arrange in string in ' ' this gap
         // console.log(cardsHtml);
         const output = tempOverview.replace(/{%PRODUCT_CARDS%}/, cardsHtml);  //   /string/
         res.end(output);
