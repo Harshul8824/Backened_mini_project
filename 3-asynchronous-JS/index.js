@@ -166,7 +166,7 @@ const getDogPic = async()=>{
   return '2: READY' 
 };
 
-(async()=>{
+(async()=>{    //this type of function call is called IIFE (Immediately invoked function expression)
   try{
     let x = await getDogPic();
     console.log(x);
