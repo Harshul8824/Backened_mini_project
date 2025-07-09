@@ -4,9 +4,9 @@ const crypto = require("crypto");
 const start = Date.now();
 process.env.UV_THREADPOOL_SIZE = 4;
 
-setTimeout(() => {console.log("timer 1 finished")}, 0);
+// setTimeout(() => {console.log("timer 1 finished")}, 0);
 
-setImmediate( () => console.log("immediate 1 finished"))
+// setImmediate( () => console.log("immediate 1 finished"))
 
 // fs.readFile('./final/test-file.txt','utf-8', ()=>{
   
@@ -44,7 +44,7 @@ setImmediate( () => console.log("immediate 1 finished"))
 
 //check synchronously
 
-fs.readFile('./final/test-file.txt','utf-8', ()=>{
+fs.readFileSync('./final/test-file.txt','utf-8')
   
   console.log("I/O finished");
   console.log("--------------------------");
@@ -72,6 +72,5 @@ console.log(Date.now() - start ,"password encrypted");
 crypto.pbkdf2Sync("password", "salt", 100000, 1024, "sha512");
 console.log(Date.now() - start ,"password encrypted");
 
-});
 
 
