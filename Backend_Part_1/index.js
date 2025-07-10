@@ -2,7 +2,7 @@ const fs = require('fs')
 const http = require('http')
 const url = require('url')
 const replaceTemplate = require('./Modules/replaceTemplate')
-const slugify = require('slugify')
+// const slugify = require('slugify')
 
 // //blocking Synchronous way (bad practice)
 // //to read the file
@@ -45,39 +45,39 @@ const slugify = require('slugify')
 // ///////////////////////////////////////////
 // //SERVER
 
-// // const server = http.createServer((req,res) => {
-// //     console.log(req);
-// //     res.end("hello from the server");
-// // });
+// const server = http.createServer((req,res) => {
+//     console.log(req);   //req is an IncomingMessage object provided by Node.js's http module. It contains details about the HTTP request, such as headers, method, URL, and more.
+//     res.end("hello from the server");
+// });
 
-// // server.listen(8000,'127.0.0.1',() =>{
-// //     console.log('Listening to req on port 8000');
-// // });
+// server.listen(8000,'127.0.0.1',() =>{
+//     console.log('Listening to req on port 8000');
+// });
 
 // //class 9. routing in nodejs
 // ///Server
 
-// // const server = http.createServer((req,res)=>{
-// //      console.log(req.url);  //use to see req url on console
-// //      const pathName = req.url;
-// //      if(pathName === '/' || pathName === '/overview'){
-// //         res.end("this is the overview")
-// //      }
-// //      else if(pathName === '/product'){
-// //         res.end("this is the product")
-// //      }
-// //      else{
-// //      res.writeHead(404, {  //this are headers
-// //         "content-type" : 'text/html',  //this ensure that response is sent in html form
-// //         'my-own-header': 'hello world'  //our own header
-// //      });
-// //      res.end('page not found');
-// //      }
-// // });
+// const server = http.createServer((req,res)=>{   
+//      console.log(req.url);  //use to see req url on console
+//      const pathName = req.url;
+//      if(pathName === '/' || pathName === '/overview'){
+//         res.end("this is the overview")
+//      }
+//      else if(pathName === '/product'){
+//         res.end("this is the product")
+//      }
+//      else{
+//      res.writeHead(404, {  //this are headers
+//         "content-type" : 'text/html',  //this ensure that response is sent in html form
+//         'my-own-header': 'hello world'  //our own header
+//      });
+//      res.end('page not found');
+//      }
+// });
 
-// // server.listen(8000,'127.0.0.1',()=>{
-// //     console.log('Listening to request on port 8000');
-// // });
+// server.listen(8000,'127.0.0.1',()=>{    //
+//     console.log('Listening to request on port 8000');
+// });
 
 
 // //**class 10. Building a very simple API
@@ -118,20 +118,19 @@ const slugify = require('slugify')
    const tempProduct = fs.readFileSync(`${__dirname}/final/template/template-product.html`,'utf-8');   
 
    const data = fs.readFileSync('./final/dev-data/data.json','utf-8');
-   const dataObj = JSON.parse(data);  
+   const dataObj = JSON.parse(data);
 
 
-   
-  //  console.log(slugify('Fresh Avacados', {lower : true}));
+  //  console.log(slugify('Fresh Avacados', {lower : true}));   //slugify is use to convert string into SEO-friendly URLs:  Convert titles or names into lowercase, hyphen-separated strings.  ex "Hello World! This is a Test"  =>  hello-world-this-is-a-test
 
-  const slug = dataObj.map(el => slugify(el.productName, {lower : true}));
-  console.log(slug);
+  // const slug = dataObj.map(el => slugify(el.productName, {lower : true}));
+  // console.log(slug);
 
 
 const server = http.createServer((req,res)=>{
       // console.log(req.url);
       // const pathName = req.url;
-      // console.log(url.parse(req.url,true));
+      // console.log(url.parse(req.url,true)); 
 
          const {pathname, query} = url.parse(req.url,true)     //url.parse(urlString, parseQueryString)  urlString: The URL string you want to parse (like req.url).  parseQueryString:  false → query string stays as a string.  true → query string gets converted into a JavaScript object.
 
@@ -144,7 +143,7 @@ const server = http.createServer((req,res)=>{
         res.end(output);
       }
       else if(pathname === '/product'){
-        // console.log(query);
+        console.log(query);
         const product = dataObj[query.id];
         const output = replaceTemplate(tempProduct, product);
        res.end(output);
