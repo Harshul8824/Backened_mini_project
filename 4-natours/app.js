@@ -2,6 +2,9 @@ const express = require('express')
 const fs = require('fs');
 const { json } = require('stream/consumers');
 
+const morgan = require('morgan');
+
+
 const app = express(); 
 
 // //basic routing in express
@@ -16,20 +19,9 @@ const app = express();
 //      res.status(200).json({message : "this is post message!", app : 'Natours'});
 // })
 
-const port = 3000;
-
-app.listen(port, ()=>{
-    console.log(`App runnig on port ${port}...`);
-})
 
 
 //creating our own api
-
-
-app.get('/', (req,res) =>{ 
-    // res.status(200).send("hello from the server side!");
-     res.status(200 ).json({message : "hello from the server side!", app : 'Natours'});
-})
 
 const tours = JSON.parse(fs.readFileSync(`${__dirname}/starter/dev-data/data/tours-simple.json`,'utf-8'));
 
@@ -37,9 +29,37 @@ const tours = JSON.parse(fs.readFileSync(`${__dirname}/starter/dev-data/data/tou
 
 app.use(express.json());
 
+//1. add middleeware
+//Creating our own middleware
+// app.use(express.json());  this middleware we create abouve int express.json is calling json method which return the function which is added in middleware stack
+
+app.use(morgan('dev'));  //we use the third party middleware
+
+app.use((req,res,next)=>{
+   console.log("hello from the middleware");
+   next();
+})
+
+app.use((req,res,next)=>{
+    req.requestTime = new Date().toISOString();
+    console.log(req.requestTime);
+    //don't forget to call next function
+    next();  //using this we call next middleware in the stack
+})
+
+//2. Route Handlers
+
+const home = (req,res) =>{ 
+    // res.status(200).send("hello from the server side!");
+     res.status(200 ).json({message : "hello from the server side!", app : 'Natours'});
+}
+
+//tours route handler
+
 const getAllTours = (req,res)=>{
    res.status(200).json({
      status : 'success',
+     reqAt : req.requestTime,
      results: tours.length,
      data: {
         tours
@@ -119,6 +139,44 @@ const deleteTour = (req,res)=>{
    })
 }
 
+//user route handler
+const getAllUsers = (req,res)=>{
+   res.status(500).json({   //500 -> server error
+     status : 'failed',
+     message : "this route is not yet defined"
+   });
+}
+
+const createUser = (req,res)=>{
+   res.status(500).json({   //500 -> server error
+     status : 'failed',
+     message : "this route is not yet defined"
+   });
+}
+
+const getUser = (req,res)=>{
+   res.status(500).json({   //500 -> server error
+     status : 'failed',
+     message : "this route is not yet defined"
+   });
+}
+
+const updateUser = (req,res)=>{
+   res.status(500).json({   //500 -> server error
+     status : 'failed',
+     message : "this route is not yet defined"
+   });
+}
+
+const deleteUser = (req,res)=>{
+   res.status(500).json({   //500 -> server error
+     status : 'failed',
+     message : "this route is not yet defined"
+   });
+}
+
+//3. Route
+app.get('/', home)
 // //to get all tours
 // app.get('/api/v1/tours',getAllTours)
 
@@ -134,16 +192,39 @@ const deleteTour = (req,res)=>{
 
 // app.delete('/api/v1/tours/:id', deleteTour)
 
-
-//another method
+//create tours route
 
 app.route('/api/v1/tours')
 .get(getAllTours)
 .post(createTour);
 
+// app.use((req,res,next)=>{  
+//    console.log("hello from the middleware"); //this not print becoz the req res cycle(getAllTours) is already finished;  //so the order is matters in express
+//    next();
+// })
+
+
 app.route('/api/v1/tours/:id')
 .get(getTour)
 .patch(updateTour)
 .delete(deleteTour);
+
+//create users route
+
+app.route('/api/v1/users')
+.get(getAllUsers)
+.post(createUser);
+
+app.route('/api/v1/users/:id')
+.get(getUser)
+.patch(updateUser)
+.delete(deleteUser);
+
+
+//4. activate the server
+const port = 3000;
+app.listen(port, ()=>{
+    console.log(`App runnig on port ${port}...`);
+})
 
 
